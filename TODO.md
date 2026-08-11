@@ -15,8 +15,8 @@ Source of requirements: `docs/` (PRD, Architecture, Database, API, UI, Security,
 - [x] Confirm business rules — discounts removed; no credit limit; receipts A4 + 80mm; currency NGN (see PRD §2.5)
 - [x] Install remaining stack: TanStack Query, shadcn/ui (Nova/Base UI preset), jsPDF
 - [x] Create IMS folder structure in `web-app/`: `app/(auth)/`, `app/(dashboard)/`, `app/api/v1/`, `components/`, `lib/`, `server/`, `hooks/`, `types/`, `public/uploads/`, `supabase/{functions,migrations}`
-- [ ] Provision Supabase project (dev)
-- [ ] Create Vercel project (dev/staging)
+- [x] Provision Supabase project (dev)
+- [x] Create Vercel project (dev/staging)
 - [ ] Define environment variables and secrets management
 - [ ] Configure Supabase `config.toml` / migrations tooling
 
