@@ -11,10 +11,10 @@ Source of requirements: `docs/` (PRD, Architecture, Database, API, UI, Security,
 - [x] Initialize Git repository (commit `4ec49bb` exists with docs + old `sayyif-ims/` skeleton)
 - [x] Scaffold base Next.js template (`web-app/`) with TypeScript + Tailwind + eslint (default create-next-app only)
 - [x] Install core dependencies (supabase-js, lucide-react)
-- [ ] Commit current `web-app/` to Git (working tree is dirty: `sayyif-ims/` deleted, `web-app/` untracked)
+- [x] Commit current `web-app/` to Git (commit `8d3d0e6`: removed `sayyif-ims/`, added `web-app/` + folder structure)
 - [ ] Confirm business rules (discounts, credit limits, receipt layout, currency)
 - [ ] Install remaining stack: TanStack Query, shadcn/ui, react-pdf/jsPDF
-- [ ] Create IMS folder structure in `web-app/`: `app/(auth)/`, `app/(dashboard)/`, `components/`, `lib/`, `server/`, `hooks/`, `types/`, `public/uploads/`
+- [x] Create IMS folder structure in `web-app/`: `app/(auth)/`, `app/(dashboard)/`, `app/api/v1/`, `components/`, `lib/`, `server/`, `hooks/`, `types/`, `public/uploads/`, `supabase/{functions,migrations}`
 - [ ] Provision Supabase project (dev)
 - [ ] Create Vercel project (dev/staging)
 - [ ] Define environment variables and secrets management
