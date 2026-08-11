@@ -165,7 +165,6 @@ Responsibilities
 Responsibilities
 
 * Sales Processing
-* Discounts
 * Multiple Products
 * Stock Deduction
 * Sales Correction

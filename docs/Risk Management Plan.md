@@ -104,7 +104,7 @@ Mitigation
 * Future features tracked as "Out of Scope" backlog.
 * Change requests reviewed against timeline.
 
-### R7 — Delays due to unclear business rules (receipts, discounts, credit)
+### R7 — Delays due to unclear business rules (receipts, credit)
 
 * Likelihood: Medium
 * Impact: Medium
@@ -133,7 +133,7 @@ Mitigation
 
 Mitigation
 
-* Unit tests for all calculations (subtotal, discount, total, credit, revenue).
+* Unit tests for all calculations (subtotal, total, credit, revenue).
 * Sample test data with known expected values.
 * Cross-check totals in reports against transaction records.
 
@@ -171,7 +171,7 @@ Mitigation
 
 Mitigation
 
-* Test printing on common printer sizes (58mm / 80mm).
+* Test printing on 80mm thermal and A4 printable formats.
 * PDF generation tested on staging.
 * Receipt layout configurable via business settings.
 

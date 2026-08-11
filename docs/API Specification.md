@@ -271,7 +271,6 @@ Request
 {
   "customerId": "uuid",
   "paymentMethod": "cash",
-  "discount": 100,
   "items": [
     {
       "productId": "uuid",

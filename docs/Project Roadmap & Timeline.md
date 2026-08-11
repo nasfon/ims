@@ -23,7 +23,7 @@ The following assumptions are made for the MVP timeline:
 * A small team (1-2 developers) is available.
 * Supabase and Vercel are used as the hosting platform.
 * No barcode scanner, supplier, or purchase order features are in MVP scope.
-* Business rules (receipt format, taxes, currency) are finalized before Phase 2.
+* Business rules (receipt format, currency) are finalized before Phase 2.
 * Stakeholders are available for testing and feedback during each phase.
 
 ---
@@ -39,7 +39,7 @@ Duration: 1 Week
 Activities
 
 * Finalize requirements and confirm scope (MVP vs Future).
-* Confirm business rules (discounts, credit limits, receipt layout).
+* Confirm business rules (credit limits, receipt layout, currency).
 * Set up Git repository and branching strategy.
 * Provision Supabase project and Vercel project.
 * Set up project folder structure and shared component library.
@@ -128,7 +128,7 @@ Duration: 2 Weeks
 
 Activities
 
-* Implement sales processing (multiple products, discounts, payment methods).
+* Implement sales processing (multiple products, payment methods).
 * Implement automatic stock deduction.
 * Implement sales history and search.
 * Implement receipt generation, printing, and PDF download.
@@ -275,7 +275,7 @@ Critical Dependencies
 
 External Dependencies
 
-* Business owner approval on receipt layout and currency format.
+* Business owner approval on receipt layout and currency format (confirmed: A4 + 80mm, NGN).
 * Final decision on payment methods supported (cash, bank transfer, POS).
 * Availability of sample product/customer data for testing.
 

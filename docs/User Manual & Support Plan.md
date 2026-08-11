@@ -62,7 +62,7 @@ Duration: 1-2 hours
 Content
 
 * Login.
-* Creating a sale (multi-product, discount, payment methods).
+* Creating a sale (multi-product, payment methods).
 * Printing and downloading receipts.
 * Viewing products and customers.
 
@@ -112,7 +112,7 @@ Content
 ## 5.3 Common Issues & Solutions
 
 * Forgotten password → Use password reset or admin reset.
-* Receipt not printing → Check printer settings and receipt size (58mm/80mm).
+* Receipt not printing → Check printer settings and receipt size (80mm thermal / A4 printable).
 * Low stock warning → Restock or adjust via product management.
 * Incorrect sale → Shop Admin corrects or reverses with a reason.
 * Session expired → Log in again.

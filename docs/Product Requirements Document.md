@@ -32,6 +32,17 @@ The MVP focuses on reliability, ease of use, and accurate business record keepin
 
 ---
 
+# 2.5 Confirmed Business Rules
+
+Confirmed by the business owner (Phase 0):
+
+* **Discounts:** Not supported in the MVP. Sales are full-price only; no discount field exists in the schema, API, or UI.
+* **Credit limits:** No hard credit limit per customer. Outstanding balance is tracked; a payment cannot exceed the outstanding balance, and marking fully paid sets the balance to zero.
+* **Receipt layout:** A4 printable and 80mm thermal receipt formats are supported.
+* **Currency:** Nigerian Naira (NGN, ₦) with 2 decimal places for all displayed and printed amounts.
+
+---
+
 # 3. Users & Roles
 
 The system supports multiple shops and role-based access control (RBAC).
@@ -145,7 +156,6 @@ Stock quantity updates automatically after every sale within the selected shop.
 * Create Sales Invoice
 * Sell Multiple Products
 * Automatic Stock Deduction (per shop)
-* Discount Support
 * Accept Cash Payments
 * Accept Bank Transfer
 * Accept POS Payments

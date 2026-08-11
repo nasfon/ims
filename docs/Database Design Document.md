@@ -176,7 +176,6 @@ Fields
 * cashier_id
 * receipt_number
 * subtotal
-* discount
 * total
 * amount_paid
 * remaining_credit

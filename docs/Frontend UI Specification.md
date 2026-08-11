@@ -281,12 +281,10 @@ Layout
 * Search Products
 * Add Products
 * Quantity Controls
-* Discount
 
 ### Summary
 
 * Subtotal
-* Discount
 * Total
 * Amount Paid
 * Remaining Credit

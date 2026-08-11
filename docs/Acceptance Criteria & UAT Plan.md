@@ -68,7 +68,7 @@ This document defines measurable acceptance criteria for each module of the Inve
 ## 3.6 Sales
 
 * A sale can include multiple products with quantities.
-* Subtotal, discount, and total are calculated correctly.
+* Subtotal and total are calculated correctly.
 * Stock is deducted automatically after a sale.
 * Payment methods (cash, bank transfer, POS) are recorded.
 * Walk-in sales (no customer) are supported.

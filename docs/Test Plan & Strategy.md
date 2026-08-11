@@ -36,7 +36,7 @@ The goal is to verify that the system meets the requirements in the Product Requ
 Scope
 
 * Business logic functions (calculations, validation).
-* Price, discount, subtotal, total calculations.
+* Price, subtotal, total calculations.
 * Stock quantity calculations.
 * Credit balance calculations.
 * Formatting utilities (currency, dates, receipt numbers).
@@ -65,7 +65,7 @@ Priority Flows
 
 1. Login and logout.
 2. Create a product and verify stock.
-3. Complete a sale (multiple items, discount) and verify stock deduction and receipt.
+3. Complete a sale (multiple items) and verify stock deduction and receipt.
 4. Record a credit sale and verify outstanding balance.
 5. Record a credit payment and verify balance reduction.
 6. Correct and reverse a sale, verify stock restoration and audit log.
@@ -182,7 +182,7 @@ Notes
 
 ## Sales
 
-* Sale with multiple items calculates subtotal, discount, and total correctly.
+* Sale with multiple items calculates subtotal and total correctly.
 * Stock is deducted after sale.
 * Sale with a customer creates credit balance when amount paid is less than total.
 * Walk-in sale (no customer) is allowed.
