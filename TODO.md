@@ -13,7 +13,7 @@ Source of requirements: `docs/` (PRD, Architecture, Database, API, UI, Security,
 - [x] Install core dependencies (supabase-js, lucide-react)
 - [x] Commit current `web-app/` to Git (commit `8d3d0e6`: removed `sayyif-ims/`, added `web-app/` + folder structure)
 - [x] Confirm business rules — discounts removed; no credit limit; receipts A4 + 80mm; currency NGN (see PRD §2.5)
-- [ ] Install remaining stack: TanStack Query, shadcn/ui, react-pdf/jsPDF
+- [x] Install remaining stack: TanStack Query, shadcn/ui (Nova/Base UI preset), jsPDF
 - [x] Create IMS folder structure in `web-app/`: `app/(auth)/`, `app/(dashboard)/`, `app/api/v1/`, `components/`, `lib/`, `server/`, `hooks/`, `types/`, `public/uploads/`, `supabase/{functions,migrations}`
 - [ ] Provision Supabase project (dev)
 - [ ] Create Vercel project (dev/staging)
