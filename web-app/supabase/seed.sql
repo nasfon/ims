@@ -1,0 +1,3 @@
+-- IMS seed data
+-- Loaded automatically by `supabase db reset` (see [db.seed] in supabase/config.toml).
+-- Phase 1: seed `roles` (Super Admin, Shop Admin, Cashier) and the initial Super Admin user here.

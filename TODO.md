@@ -17,15 +17,15 @@ Source of requirements: `docs/` (PRD, Architecture, Database, API, UI, Security,
 - [x] Create IMS folder structure in `web-app/`: `app/(auth)/`, `app/(dashboard)/`, `app/api/v1/`, `components/`, `lib/`, `server/`, `hooks/`, `types/`, `public/uploads/`, `supabase/{functions,migrations}`
 - [x] Provision Supabase project (dev)
 - [x] Create Vercel project (dev/staging)
-- [ ] Define environment variables and secrets management
-- [ ] Configure Supabase `config.toml` / migrations tooling
+- [x] Define environment variables and secrets management
+- [x] Configure Supabase `config.toml` / migrations tooling
 
 ## Phase 1 — Authentication & Core Setup
 
-- [ ] Create `roles` table and seed roles (Super Admin, Shop Admin, Cashier)
-- [ ] Create `shops` table (CRUD for Super Admin)
-- [ ] Create `users` table (shop_id, role_id, is_active)
-- [ ] Create `audit_logs` table + audit logging function
+- [x] Create `roles` table and seed roles (Super Admin, Shop Admin, Cashier)
+- [x] Create `shops` table (CRUD for Super Admin)
+- [x] Create `users` table (shop_id, role_id, is_active)
+- [x] Create `audit_logs` table + audit logging function
 - [ ] Implement Supabase Auth login/logout/session handling
 - [ ] Implement `POST /auth/login` and `POST /auth/logout`
 - [ ] Implement shops API (GET/POST/PATCH/DELETE `/shops`)

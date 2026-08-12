@@ -48,16 +48,25 @@ Environment Isolation
 
 Required Variables
 
-* SUPABASE_URL
-* SUPABASE_ANON_KEY (client-safe)
-* SUPABASE_SERVICE_ROLE_KEY (server-side only, never exposed to the client)
+* `NEXT_PUBLIC_SUPABASE_URL` — Supabase project URL.
+* `NEXT_PUBLIC_SUPABASE_ANON_KEY` — public anon key (client-safe, protected by RLS).
+* `SUPABASE_SERVICE_ROLE_KEY` — service role key (server-side only, never exposed to the client bundle).
+* `SUPABASE_DB_PASSWORD` — database password for the `supabase db` CLI (optional).
+* `VERCEL_OIDC_TOKEN` — auto-injected by Vercel during builds/CI (optional locally).
 * Any third-party keys (PDF, storage) if used
+
+Convention
+
+* `NEXT_PUBLIC_` prefix means the value is bundled into the client. Only the anon key and URL may use it.
+* Everything else is server-only and must never be referenced from client components.
+* The canonical (committed) template lives at `web-app/.env.example`.
 
 Management
 
 * Store in Vercel project settings per environment.
-* Never commit secrets to the repository.
+* Never commit secrets to the repository (`.env*` files are git-ignored).
 * Use different values per environment.
+* Server-only imports guard against accidental client exposure (`server-only` marker in `lib/supabase/server.ts`).
 
 ---
 
