@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { LoginForm } from "@/components/auth/login-form";
 
@@ -11,7 +12,7 @@ export default function LoginPage() {
     <div className="flex flex-1 items-center justify-center bg-zinc-50 px-4 dark:bg-black">
       <div className="w-full max-w-sm">
         <div className="mb-6 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground text-primary">
             Inventory Management System
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -19,7 +20,9 @@ export default function LoginPage() {
           </p>
         </div>
         <div className="rounded-xl border border-border bg-background p-6 shadow-sm">
-          <LoginForm />
+          <Suspense fallback={<div className="flex justify-center py-8 text-sm text-muted-foreground">Loading…</div>}>
+            <LoginForm />
+          </Suspense>
         </div>
       </div>
     </div>

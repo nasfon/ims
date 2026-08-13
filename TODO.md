@@ -26,16 +26,16 @@ Source of requirements: `docs/` (PRD, Architecture, Database, API, UI, Security,
 - [x] Create `shops` table (CRUD for Super Admin)
 - [x] Create `users` table (shop_id, role_id, is_active)
 - [x] Create `audit_logs` table + audit logging function
-- [ ] Implement Supabase Auth login/logout/session handling
-- [ ] Implement `POST /auth/login` and `POST /auth/logout`
-- [ ] Implement shops API (GET/POST/PATCH/DELETE `/shops`)
-- [ ] Implement users API (GET/POST/PATCH/DELETE `/users`) with pagination/search/role filter
-- [ ] Implement user onboarding and role assignment
-- [ ] Build dashboard layout shell (top bar, sidebar, navigation, breadcrumb)
-- [ ] Implement login page (email, password, error message)
-- [ ] Implement route protection (middleware) for unauthenticated users
-- [ ] Implement role-based route guards
-- [ ] Enforce inactive users cannot log in
+- [x] Implement Supabase Auth login/logout/session handling
+- [x] Implement `POST /auth/login` and `POST /auth/logout`
+- [x] Implement shops API (GET/POST/PATCH/DELETE `/shops`)
+- [x] Implement users API (GET/POST/PATCH/DELETE `/users`) with pagination/search/role filter
+- [x] Implement user onboarding and role assignment
+- [x] Build dashboard layout shell (top bar, sidebar, navigation, breadcrumb)
+- [x] Implement login page (email, password, error message)
+- [x] Implement route protection (proxy) for unauthenticated users
+- [x] Implement role-based route guards
+- [x] Enforce inactive users cannot log in
 
 ## Phase 2 — Product & Inventory
 

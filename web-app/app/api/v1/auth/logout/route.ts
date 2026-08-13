@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
+import { getClientIp } from "@/lib/request";
 import { createClient, createServerAdminClient } from "@/lib/supabase/server";
 
 export async function POST(request: NextRequest) {
@@ -16,10 +17,6 @@ export async function POST(request: NextRequest) {
       .select("shop_id")
       .eq("id", user.id)
       .single();
-    const ipAddress =
-      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-      request.headers.get("x-real-ip") ??
-      null;
     await admin.rpc("record_audit", {
       p_user_id: user.id,
       p_shop_id: profile?.shop_id ?? null,
@@ -27,7 +24,7 @@ export async function POST(request: NextRequest) {
       p_entity: "user",
       p_entity_id: user.id,
       p_reason: null,
-      p_ip_address: ipAddress,
+      p_ip_address: getClientIp(request),
     });
   }
 

@@ -2,19 +2,11 @@ import "server-only";
 
 import { redirect } from "next/navigation";
 
+import type { AuthSessionUser } from "@/types/auth";
 import type { RoleSlug } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
 
-export type AuthSessionUser = {
-  id: string;
-  email: string | undefined;
-  full_name: string;
-  is_active: boolean;
-  shop_id: string | null;
-  role_id: string | null;
-  role_slug: RoleSlug | null;
-  shop_name: string | null;
-};
+export type { AuthSessionUser };
 
 export type AuthSession = {
   user: AuthSessionUser;
@@ -23,7 +15,11 @@ export type AuthSession = {
 
 /**
  * Resolves the current session + the user's profile (role + shop).
- * Returns null when there is no authenticated session.
+ * Returns null when there is no authenticated session OR when the user's
+ * profile is inactive/soft-deleted.
+ *
+ * A valid JWT is not enough: deactivated users must be treated as signed out
+ * even if their access token is still unexpired (Security & RBAC §7).
  */
 export async function getSession(): Promise<AuthSession | null> {
   const supabase = await createClient();
@@ -40,6 +36,12 @@ export async function getSession(): Promise<AuthSession | null> {
     )
     .eq("id", user.id)
     .single();
+
+  if (!profile || !profile.is_active) {
+    // Best-effort: clear the stale session so the redirect to /login sticks.
+    await supabase.auth.signOut().catch(() => {});
+    return null;
+  }
 
   return {
     user: {
@@ -69,6 +71,18 @@ export async function requireSession(): Promise<AuthSession> {
 export async function requireSuperAdmin(): Promise<AuthSession> {
   const session = await requireSession();
   if (session.user.role_slug !== "super_admin") {
+    redirect("/dashboard");
+  }
+  return session;
+}
+
+/** Requires a user-manager session (Super Admin / Shop Admin) or redirects. */
+export async function requireUserManager(): Promise<AuthSession> {
+  const session = await requireSession();
+  if (
+    session.user.role_slug !== "super_admin" &&
+    session.user.role_slug !== "shop_admin"
+  ) {
     redirect("/dashboard");
   }
   return session;

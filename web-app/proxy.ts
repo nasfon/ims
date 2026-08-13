@@ -1,35 +1,114 @@
+import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-import { updateSession } from "@/lib/supabase/proxy";
+import { getPublicEnv } from "@/lib/env";
 
-const PUBLIC_PATHS = ["/login"];
-const API_PREFIX = "/api";
+/**
+ * Route protection for unauthenticated users (Security & RBAC §4).
+ *
+ * Next.js 16: this file replaces `middleware.ts`. It runs before route
+ * rendering, refreshes the Supabase session cookies, and guards page routes.
+ *
+ * Rules:
+ *  - Unauthenticated users hitting any protected page are sent to /login
+ *    (with a `next` param so they land back where they started).
+ *  - Authenticated users visiting /login (or /) are sent to /dashboard.
+ *  - API routes are left to their own auth guards and excluded here.
+ */
+const PROTECTED_PATHS = [
+  "/dashboard",
+  "/products",
+  "/customers",
+  "/sales",
+  "/credit-book",
+  "/expenses",
+  "/reports",
+  "/audit-logs",
+  "/users",
+  "/shops",
+  "/settings",
+];
+
+function isProtectedPath(pathname: string): boolean {
+  return PROTECTED_PATHS.some(
+    (path) => pathname.startsWith(`${path}/`) || pathname === path,
+  );
+}
 
 export async function proxy(request: NextRequest) {
-  const { supabaseResponse, user } = await updateSession(request);
-  const { pathname } = request.nextUrl;
+  const { supabaseUrl, supabaseAnonKey } = getPublicEnv();
 
-  const isPublicRoute = PUBLIC_PATHS.includes(pathname);
-  const isApiRoute = pathname.startsWith(API_PREFIX);
-  const isRoot = pathname === "/";
+  const response = NextResponse.next({ request });
 
-  if (!user && !isPublicRoute && !isApiRoute) {
-    // Unauthenticated user hitting a protected page (or root) → login.
-    if (isRoot) {
-      return NextResponse.redirect(new URL("/login", request.url));
+  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: false,
+    },
+    cookies: {
+      getAll() {
+        return request.cookies.getAll();
+      },
+      setAll(cookiesToSet) {
+        // Forward cookie updates to the browser. If a cookie to set is
+        // `null`, the session was cleared (e.g. signed out).
+        for (const { name, value, options } of cookiesToSet) {
+          if (value === undefined || value === null) {
+            request.cookies.delete(name);
+            response.cookies.delete(name);
+          } else {
+            request.cookies.set(name, value);
+            response.cookies.set(name, value, options);
+          }
+        }
+      },
+    },
+  });
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { pathname, search } = request.nextUrl;
+
+  if (!user) {
+    // Public pages: no redirect needed.
+    if (pathname === "/login" || pathname === "/") {
+      return response;
     }
-    return NextResponse.redirect(new URL(`/login?next=${encodeURIComponent(pathname)}`, request.url));
+
+    // Everything else in the app requires a session.
+    if (isProtectedPath(pathname)) {
+      const loginUrl = request.nextUrl.clone();
+      loginUrl.pathname = "/login";
+      loginUrl.search = "";
+      loginUrl.searchParams.set("next", `${pathname}${search}`);
+      return NextResponse.redirect(loginUrl);
+    }
+
+    return response;
   }
 
-  if (user && (isPublicRoute || isRoot)) {
-    // Authenticated user heading to login/root → dashboard.
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+  // Authenticated: keep sessions out of /login and the root.
+  if (pathname === "/login" || pathname === "/") {
+    const homeUrl = request.nextUrl.clone();
+    homeUrl.pathname = "/dashboard";
+    homeUrl.search = "";
+    return NextResponse.redirect(homeUrl);
   }
 
-  return supabaseResponse;
+  return response;
 }
 
 export const config = {
-  // Apply to everything except static assets, images, and the login page.
-  matcher: ["/((?!_next/static|_next/image|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)"],
+  matcher: [
+    /*
+     * Match all request paths except:
+     * - /api routes (they enforce their own auth)
+     * - Next.js static assets and image optimizer
+     * - static files (favicon, public/*, fonts, etc.)
+     */
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)",
+  ],
 };
