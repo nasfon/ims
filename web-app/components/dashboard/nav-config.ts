@@ -4,6 +4,7 @@ import {
   BookOpenText,
   LayoutDashboard,
   Package,
+  PackageOpen,
   ReceiptText,
   ScrollText,
   Settings,
@@ -29,6 +30,7 @@ export type NavItem = {
 export const NAV_ITEMS: NavItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, roles: ALL_ROLES },
   { href: "/products", label: "Products", icon: Package, roles: ALL_ROLES },
+  { href: "/products/low-stock", label: "Low Stock", icon: PackageOpen, roles: ALL_ROLES },
   { href: "/customers", label: "Customers", icon: Users, roles: ALL_ROLES },
   { href: "/sales", label: "Sales", icon: ReceiptText, roles: ALL_ROLES },
   { href: "/credit-book", label: "Credit Book", icon: BookOpenText, roles: ADMIN_ROLES },

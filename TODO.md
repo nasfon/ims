@@ -39,17 +39,17 @@ Source of requirements: `docs/` (PRD, Architecture, Database, API, UI, Security,
 
 ## Phase 2 — Product & Inventory
 
-- [ ] Create `products` table (shop_id, sku, quantity, selling_price, minimum_stock, is_active)
-- [ ] Create `stock_history` table + trigger for inventory movements
-- [ ] Add indexes (shop_id, sku unique per shop, created_at) and constraints (quantity >= 0, price > 0)
-- [ ] Implement products API (CRUD) with search/sort/filter/pagination
-- [ ] Implement `GET /products?lowStock=true`
-- [ ] Implement `GET /stock/low` and `GET /stock/history`
-- [ ] Implement stock deduction/adjustment logic (atomic, with stock history record)
-- [ ] Implement soft delete for products (deleted_at, deleted_by)
-- [ ] Build product list page (search, pagination, sort, filter, columns, actions)
-- [ ] Build product form page (create/edit with validation)
-- [ ] Implement low stock flagging and low stock list
+- [x] Create `products` table (shop_id, sku, quantity, selling_price, minimum_stock, is_active)
+- [x] Create `stock_history` table + trigger for inventory movements
+- [x] Add indexes (shop_id, sku unique per shop, created_at) and constraints (quantity >= 0, price > 0)
+- [x] Implement products API (CRUD) with search/sort/filter/pagination
+- [x] Implement `GET /products?lowStock=true`
+- [x] Implement `GET /stock/low` and `GET /stock/history`
+- [x] Implement stock deduction/adjustment logic (atomic, with stock history record)
+- [x] Implement soft delete for products (deleted_at, deleted_by)
+- [x] Build product list page (search, pagination, sort, filter, columns, actions)
+- [x] Build product form page (create/edit with validation)
+- [x] Implement low stock flagging and low stock list
 
 ## Phase 3 — Customers & Credit
 
