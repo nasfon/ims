@@ -35,6 +35,8 @@ export type ProductsQueryParams = {
   sortDir: "asc" | "desc";
   status: string;
   lowStock: boolean;
+  /** Super Admin only: scope the search to a specific shop. */
+  shopId?: string;
 };
 
 export function useProducts(params: ProductsQueryParams) {
@@ -50,6 +52,7 @@ export function useProducts(params: ProductsQueryParams) {
         lowStock: String(params.lowStock),
       });
       if (params.status) qs.set("status", params.status);
+      if (params.shopId) qs.set("shop_id", params.shopId);
       return requestJson<ProductsResponse>(`/api/v1/products?${qs.toString()}`);
     },
   });

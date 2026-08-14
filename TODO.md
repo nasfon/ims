@@ -53,39 +53,39 @@ Source of requirements: `docs/` (PRD, Architecture, Database, API, UI, Security,
 
 ## Phase 3 — Customers & Credit
 
-- [ ] Create `customers` table (shop_id, full_name, phone, email, address, total_credit)
-- [ ] Create `credit_payments` table (customer_id, sale_id, amount, payment_method, received_by)
-- [ ] Add indexes (shop_id, phone, customer_id)
-- [ ] Implement customers API (CRUD) with search by name/phone
-- [ ] Implement `GET /customers/{customerId}/sales` (purchase history)
-- [ ] Implement `GET /customers/{customerId}/credit`
-- [ ] Implement credit payments API (`GET /credits`, `POST /credits/payments`, history)
-- [ ] Enforce payment cannot exceed outstanding balance; mark fully paid sets balance to zero
-- [ ] Implement soft delete for customers
-- [ ] Build customer list page (name, phone, outstanding credit, total purchases)
-- [ ] Build customer details page (info, purchase history, credit, payment history)
-- [ ] Build credit book page (customer list, record payment, mark fully paid)
+- [x] Create `customers` table (shop_id, full_name, phone, email, address, total_credit)
+- [x] Create `credit_payments` table (customer_id, sale_id, amount, payment_method, received_by)
+- [x] Add indexes (shop_id, phone, customer_id)
+- [x] Implement customers API (CRUD) with search by name/phone
+- [x] Implement `GET /customers/{customerId}/sales` (purchase history)
+- [x] Implement `GET /customers/{customerId}/credit`
+- [x] Implement credit payments API (`GET /credits`, `POST /credits/payments`, history)
+- [x] Enforce payment cannot exceed outstanding balance; mark fully paid sets balance to zero
+- [x] Implement soft delete for customers
+- [x] Build customer list page (name, phone, outstanding credit, total purchases)
+- [x] Build customer details page (info, purchase history, credit, payment history)
+- [x] Build credit book page (customer list, record payment, mark fully paid)
 
 ## Phase 4 — Sales, Receipts & Expenses
 
-- [ ] Create `sales` table (customer_id nullable, cashier_id, receipt_number unique, subtotal, discount, total, amount_paid, remaining_credit, payment_method, status)
-- [ ] Create `sale_items` table (sale_id, product_id, quantity, unit_price, total_price)
-- [ ] Create `expenses` table (shop_id, description, amount, expense_date, recorded_by)
-- [ ] Implement sequential/unique receipt numbering trigger
-- [ ] Implement sales API: GET/POST `/sales`, GET `/sales/{saleId}`
-- [ ] Implement sale creation with multiple products, discount, payment methods (cash, bank transfer, POS)
-- [ ] Implement automatic stock deduction on sale (in transaction)
-- [ ] Prevent sale when stock insufficient
-- [ ] Support walk-in sales (no customer)
-- [ ] Implement credit balance update when amount paid < total
-- [ ] Implement `PATCH /sales/{saleId}` (correct, requires reason)
-- [ ] Implement `POST /sales/{saleId}/reverse` (restores stock, requires reason)
-- [ ] Prevent correcting/reversing an already corrected/reversed sale
-- [ ] Implement expenses API (CRUD) with date filter
-- [ ] Build sales list page (columns: receipt, date, customer, cashier, payment method, total, status)
-- [ ] Build new sale page (customer section, product search/add, quantity, discount, summary, payment)
-- [ ] Build receipt display (all PRD section 4.7 fields, print, download PDF)
-- [ ] Implement receipt print + PDF generation (`GET /sales/{saleId}/receipt`, `/receipt/pdf`)
+- [x] Create `sales` table (customer_id nullable, cashier_id, receipt_number unique, subtotal, discount, total, amount_paid, remaining_credit, payment_method, status)
+- [x] Create `sale_items` table (sale_id, product_id, quantity, unit_price, total_price)
+- [x] Create `expenses` table (shop_id, description, amount, expense_date, recorded_by)
+- [x] Implement sequential/unique receipt numbering trigger
+- [x] Implement sales API: GET/POST `/sales`, GET `/sales/{saleId}`
+- [x] Implement sale creation with multiple products, discount, payment methods (cash, bank transfer, POS)
+- [x] Implement automatic stock deduction on sale (in transaction)
+- [x] Prevent sale when stock insufficient
+- [x] Support walk-in sales (no customer)
+- [x] Implement credit balance update when amount paid < total
+- [x] Implement `PATCH /sales/{saleId}` (correct, requires reason)
+- [x] Implement `POST /sales/{saleId}/reverse` (restores stock, requires reason)
+- [x] Prevent correcting/reversing an already corrected/reversed sale
+- [x] Implement expenses API (CRUD) with date filter
+- [x] Build sales list page (columns: receipt, date, customer, cashier, payment method, total, status)
+- [x] Build new sale page (customer section, product search/add, quantity, discount, summary, payment)
+- [x] Build receipt display (all PRD section 4.7 fields, print, download PDF)
+- [x] Implement receipt print + PDF generation (`GET /sales/{saleId}/receipt`, `/receipt/pdf`)
 - [ ] Implement sale correction/reversal UI (reason prompt, role restricted)
 - [ ] Build expenses page (list, record/edit/delete form)
 

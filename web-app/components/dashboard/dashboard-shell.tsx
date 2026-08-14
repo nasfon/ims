@@ -13,7 +13,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
       <DashboardSidebar open={mobileOpen} onClose={() => setMobileOpen(false)} />
       <div className="flex min-w-0 flex-1 flex-col md:pl-64">
         <DashboardTopbar onMenuClick={() => setMobileOpen(true)} />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 print:p-0">{children}</main>
       </div>
     </div>
   );
