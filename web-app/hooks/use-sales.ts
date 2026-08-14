@@ -8,6 +8,7 @@ import {
 
 import type {
   Sale,
+  SaleCorrectValues,
   SaleFormValues,
   SalesResponse,
 } from "@/types/sales";
@@ -78,6 +79,44 @@ export function useCreateSale() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["sales"] });
       qc.invalidateQueries({ queryKey: ["customers"] });
+      qc.invalidateQueries({ queryKey: ["products"] });
+    },
+  });
+}
+
+export function useCorrectSale() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (args: { saleId: string; values: SaleCorrectValues }) =>
+      requestJson<Sale>(`/api/v1/sales/${args.saleId}`, {
+        method: "PATCH",
+        body: JSON.stringify(args.values),
+      }),
+    onSuccess: (sale) => {
+      qc.invalidateQueries({ queryKey: ["sales"] });
+      qc.invalidateQueries({ queryKey: ["sale", sale.id] });
+      qc.invalidateQueries({ queryKey: ["customers"] });
+      qc.invalidateQueries({ queryKey: ["customer-credit"] });
+      qc.invalidateQueries({ queryKey: ["credits"] });
+      qc.invalidateQueries({ queryKey: ["products"] });
+    },
+  });
+}
+
+export function useReverseSale() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (args: { saleId: string; reason: string }) =>
+      requestJson<Sale>(`/api/v1/sales/${args.saleId}/reverse`, {
+        method: "POST",
+        body: JSON.stringify({ reason: args.reason }),
+      }),
+    onSuccess: (sale) => {
+      qc.invalidateQueries({ queryKey: ["sales"] });
+      qc.invalidateQueries({ queryKey: ["sale", sale.id] });
+      qc.invalidateQueries({ queryKey: ["customers"] });
+      qc.invalidateQueries({ queryKey: ["customer-credit"] });
+      qc.invalidateQueries({ queryKey: ["credits"] });
       qc.invalidateQueries({ queryKey: ["products"] });
     },
   });

@@ -13,6 +13,23 @@ create unique index if not exists products_shop_id_sku_uq on public.products (sh
 -- Constraints (Database Design §6):
 --   quantity cannot be negative
 --   selling price must be greater than zero
-alter table public.products
-  add constraint if not exists products_quantity_not_negative check (quantity >= 0),
-  add constraint if not exists products_selling_price_gt_zero check (selling_price > 0);
+-- PostgreSQL does not support `ADD CONSTRAINT IF NOT EXISTS`, so wrap in a DO block.
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'products_quantity_not_negative' and conrelid = 'public.products'::regclass
+  ) then
+    alter table public.products
+      add constraint products_quantity_not_negative check (quantity >= 0);
+  end if;
+
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'products_selling_price_gt_zero' and conrelid = 'public.products'::regclass
+  ) then
+    alter table public.products
+      add constraint products_selling_price_gt_zero check (selling_price > 0);
+  end if;
+end
+$$;

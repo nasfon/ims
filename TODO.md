@@ -86,21 +86,21 @@ Source of requirements: `docs/` (PRD, Architecture, Database, API, UI, Security,
 - [x] Build new sale page (customer section, product search/add, quantity, discount, summary, payment)
 - [x] Build receipt display (all PRD section 4.7 fields, print, download PDF)
 - [x] Implement receipt print + PDF generation (`GET /sales/{saleId}/receipt`, `/receipt/pdf`)
-- [ ] Implement sale correction/reversal UI (reason prompt, role restricted)
-- [ ] Build expenses page (list, record/edit/delete form)
+- [x] Implement sale correction/reversal UI (reason prompt, role restricted)
+- [x] Build expenses page (list, record/edit/delete form)
 
 ## Phase 5 — Reports, Dashboard & Settings
 
-- [ ] Create `business_settings` table (shop_id, business_name, phone, address, logo_url, receipt_footer)
-- [ ] Implement dashboard API (`GET /dashboard`: products, customers, today's sales, revenue, credit, expenses, low stock, recent sales)
-- [ ] Implement reports API: `/reports/sales`, `/reports/revenue`, `/reports/expenses`, `/reports/credits`, `/reports/inventory` with date range and shop filter
-- [ ] Implement business settings API (`GET/PATCH /settings/business`)
-- [ ] Implement audit logs API (`GET /audit-logs` with user/date/action filters)
-- [ ] Build dashboard page (widgets, recent sales, quick actions)
-- [ ] Build reports page (cards, filters, generate, print, download PDF)
-- [ ] Build business settings page (info, logo, contact, receipt footer)
-- [ ] Build audit logs page (columns, filters)
-- [ ] Implement role-based UI visibility (hide/disable unauthorized actions)
+- [x] Create `business_settings` table (shop_id, business_name, phone, address, logo_url, receipt_footer)
+- [x] Implement dashboard API (`GET /dashboard`: products, customers, today's sales, revenue, credit, expenses, low stock, recent sales)
+- [x] Implement reports API: `/reports/sales`, `/reports/revenue`, `/reports/expenses`, `/reports/credits`, `/reports/inventory` with date range and shop filter
+- [x] Implement business settings API (`GET/PATCH /settings/business`)
+- [x] Implement audit logs API (`GET /audit-logs` with user/date/action filters)
+- [x] Build dashboard page (widgets, recent sales, quick actions)
+- [x] Build reports page (cards, filters, generate, print, download PDF)
+- [x] Build business settings page (info, logo, contact, receipt footer)
+- [x] Build audit logs page (columns, filters)
+- [x] Implement role-based UI visibility (hide/disable unauthorized actions)
 
 ## Phase 6 — Testing & Hardening
 

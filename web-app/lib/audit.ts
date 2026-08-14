@@ -53,6 +53,27 @@ export type Auditor = {
   role_slug: string;
 };
 
+/** Maps an audit_logs row (with embedded user/role/shop) to the API shape. */
+export function mapAuditLogRow(
+  row: Record<string, unknown>,
+): AuditLogWithDetails {
+  return {
+    id: row.id as string,
+    shop_id: (row.shop_id as string | null) ?? null,
+    user_id: (row.user_id as string | null) ?? null,
+    role_id: (row.role_id as string | null) ?? null,
+    action: row.action as string,
+    entity: row.entity as string,
+    entity_id: (row.entity_id as string | null) ?? null,
+    reason: (row.reason as string | null) ?? null,
+    ip_address: (row.ip_address as string | null) ?? null,
+    created_at: row.created_at as string,
+    user: (row.user as { full_name: string | null } | null) ?? null,
+    role: (row.role as { name: string | null; slug: string | null } | null) ?? null,
+    shop: (row.shop as { name: string | null } | null) ?? null,
+  };
+}
+
 export type RecordAuditInput = {
   user_id: string;
   shop_id: string | null;
