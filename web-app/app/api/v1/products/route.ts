@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
     query = query.eq("is_active", status === "active");
   }
   if (lowStock) {
-    query = query.or("quantity.lte.minimum_stock");
+    query = query.or("quantity.lte.\`minimum_stock\`");
   }
   if (shopId && session.user.role_slug === ROLES.SUPER_ADMIN) {
     query = query.eq("shop_id", shopId);

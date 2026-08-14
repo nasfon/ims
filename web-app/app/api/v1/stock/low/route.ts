@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     query = query.eq("is_active", true);
   }
 
-  query = query.or("quantity.lte.minimum_stock");
+  query = query.or("quantity.lte.\`minimum_stock\`");
 
   if (search) {
     query = query.or(`name.ilike.%${search}%,sku.ilike.%${search}%`);

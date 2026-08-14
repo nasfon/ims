@@ -51,7 +51,7 @@ export async function GET() {
       .select("id", { count: "exact", head: true })
       .is("deleted_at", null)
       .eq("is_active", true)
-      .or("quantity.lte.minimum_stock"),
+      .or("quantity.lte.\`minimum_stock\`"),
     session.supabase
       .from("sales")
       .select(
