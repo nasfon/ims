@@ -41,7 +41,7 @@ export function DashboardSidebar({
       >
         <div className="flex h-14 shrink-0 items-center justify-between border-b border-border px-4">
           <Link href="/dashboard" className="text-lg font-semibold tracking-tight">
-            IMS
+            SAYYIF PREMIUM FLOUR MASTER LTD
           </Link>
           <button
             type="button"

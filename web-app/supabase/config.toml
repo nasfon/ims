@@ -118,7 +118,7 @@ enabled = true
 file_size_limit = "50MiB"
 
 # Uncomment to configure local storage buckets
-# IMS: bucket for business/branding images (logo uploads in settings).
+# SAYYIF: bucket for business/branding images (logo uploads in settings).
 [storage.buckets.uploads]
 public = true
 file_size_limit = "5MiB"
@@ -173,7 +173,7 @@ enable_refresh_token_rotation = true
 # Requires enable_refresh_token_rotation = true.
 refresh_token_reuse_interval = 10
 # Allow/disallow new user signups to your project.
-# IMS: accounts are provisioned by admins (user onboarding), so disable open signup.
+# SAYYIF: accounts are provisioned by admins (user onboarding), so disable open signup.
 enable_signup = false
 # Allow/disallow anonymous sign-ins to your project.
 enable_anonymous_sign_ins = false
@@ -224,7 +224,7 @@ enable_signup = false
 # addresses. If disabled, only the new email is required to confirm.
 double_confirm_changes = true
 # If enabled, users need to confirm their email address before signing in.
-# IMS: admins onboard users, so disable email confirmation to avoid blocking logins.
+# SAYYIF: admins onboard users, so disable email confirmation to avoid blocking logins.
 enable_confirmations = false
 # If enabled, users will need to reauthenticate or have logged in recently to change their password.
 secure_password_change = false

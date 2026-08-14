@@ -5,7 +5,7 @@ import { QueryProvider } from "@/components/providers/query-provider";
 import { requireUserManager } from "@/lib/auth";
 
 export const metadata: Metadata = {
-  title: "Credit Book — IMS",
+  title: "Credit Book — SAYYIF PREMIUM FLOUR MASTER LTD",
 };
 
 export default async function CreditBookPage({

@@ -4,7 +4,7 @@ import { ModulePlaceholder } from "@/components/dashboard/module-placeholder";
 import { requireSuperAdmin } from "@/lib/auth";
 
 export const metadata: Metadata = {
-  title: "Shops — IMS",
+  title: "Shops — SAYYIF PREMIUM FLOUR MASTER LTD",
 };
 
 export default async function ShopsPage() {

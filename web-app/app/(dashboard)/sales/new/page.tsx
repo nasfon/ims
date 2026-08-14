@@ -7,7 +7,7 @@ import { ROLES } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
-  title: "New Sale — IMS",
+  title: "New Sale — SAYYIF PREMIUM FLOUR MASTER LTD",
 };
 
 export default async function NewSalePage() {

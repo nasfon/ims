@@ -19,7 +19,7 @@ begin
   -- Ensure at least one shop exists.
   select id into v_shop_id from public.shops order by created_at limit 1;
   if v_shop_id is null then
-    insert into public.shops (name) values ('Main Shop')
+    insert into public.shops (name) values ('SAYYIF PREMIUM FLOUR MASTER LTD')
     returning id into v_shop_id;
   end if;
 

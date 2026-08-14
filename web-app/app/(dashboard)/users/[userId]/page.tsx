@@ -9,7 +9,7 @@ import { createClient } from "@/lib/supabase/server";
 import { UUID_RE } from "@/lib/validation/users";
 
 export const metadata: Metadata = {
-  title: "Edit User — IMS",
+  title: "Edit User — SAYYIF PREMIUM FLOUR MASTER LTD",
 };
 
 export default async function EditUserPage({

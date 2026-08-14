@@ -10,7 +10,7 @@ import { createClient } from "@/lib/supabase/server";
 import { UUID_RE } from "@/lib/validation/products";
 
 export const metadata: Metadata = {
-  title: "Edit Product — IMS",
+  title: "Edit Product — SAYYIF PREMIUM FLOUR MASTER LTD",
 };
 
 export default async function EditProductPage({

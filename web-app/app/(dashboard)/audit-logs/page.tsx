@@ -5,7 +5,7 @@ import { QueryProvider } from "@/components/providers/query-provider";
 import { requireUserManager } from "@/lib/auth";
 
 export const metadata: Metadata = {
-  title: "Audit Logs — IMS",
+  title: "Audit Logs — SAYYIF PREMIUM FLOUR MASTER LTD",
 };
 
 export default async function AuditLogsPage() {

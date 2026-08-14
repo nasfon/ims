@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { LoginForm } from "@/components/auth/login-form";
 
 export const metadata: Metadata = {
-  title: "Sign in — IMS",
+  title: "Sign in — SAYYIF PREMIUM FLOUR MASTER LTD",
 };
 
 export default function LoginPage() {
