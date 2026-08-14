@@ -10,7 +10,7 @@ import { createClient } from "@/lib/supabase/server";
 import { UUID_RE } from "@/lib/validation/customers";
 
 export const metadata: Metadata = {
-  title: "Customer — SAYYIF PREMIUM FLOUR MASTER LTD",
+  title: "Customer — SAYYIF",
 };
 
 export default async function CustomerDetailsPage({

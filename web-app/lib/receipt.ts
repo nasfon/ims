@@ -77,7 +77,7 @@ export function renderReceiptHtml(
 </style>
 </head>
 <body>
-  <h1 class="shop-name center">${escapeHtml(sale.shop?.name ?? "SAYYIF PREMIUM FLOUR MASTER LTD")}</h1>
+  <h1 class="shop-name center">${escapeHtml(sale.shop?.name ?? "SAYYIF")}</h1>
   ${sale.shop?.phone ? `<p class="center muted">${escapeHtml(sale.shop.phone)}</p>` : ""}
   ${sale.shop?.address ? `<p class="center muted">${escapeHtml(sale.shop.address)}</p>` : ""}
   ${sale.shop?.email ? `<p class="center muted">${escapeHtml(sale.shop.email)}</p>` : ""}

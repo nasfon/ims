@@ -7,7 +7,7 @@ import { ROLES } from "@/lib/roles";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
-  title: "Add User — SAYYIF PREMIUM FLOUR MASTER LTD",
+  title: "Add User — SAYYIF",
 };
 
 export default async function NewUserPage() {

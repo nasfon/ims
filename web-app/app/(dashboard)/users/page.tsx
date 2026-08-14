@@ -5,7 +5,7 @@ import { UsersTable } from "@/components/users/users-table";
 import { requireUserManager } from "@/lib/auth";
 
 export const metadata: Metadata = {
-  title: "Users — SAYYIF PREMIUM FLOUR MASTER LTD",
+  title: "Users — SAYYIF",
 };
 
 export default async function UsersPage({

@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "SAYYIF PREMIUM FLOUR MASTER LTD",
+    default: "SAYYIF",
     template: "%s",
   },
   description: "Multi-shop inventory management system",

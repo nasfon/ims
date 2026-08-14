@@ -65,7 +65,7 @@ export function SaleReceipt() {
           {/* Business + shop identity (receipt header). */}
           <div className="flex flex-col gap-0.5 border-b border-border pb-3">
             <div className="text-base font-semibold">
-              {sale.shop?.name ?? "SAYYIF PREMIUM FLOUR MASTER LTD"}
+              {sale.shop?.name ?? "SAYYIF"}
             </div>
             {sale.shop?.phone ? (
               <div className="text-sm text-muted-foreground">{sale.shop.phone}</div>

@@ -6,7 +6,7 @@ import { requireSession } from "@/lib/auth";
 import { ROLES } from "@/lib/roles";
 
 export const metadata: Metadata = {
-  title: "Dashboard — SAYYIF PREMIUM FLOUR MASTER LTD",
+  title: "Dashboard — SAYYIF",
 };
 
 export default async function DashboardPage() {

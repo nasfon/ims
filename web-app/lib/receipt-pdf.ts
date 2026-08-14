@@ -70,7 +70,7 @@ export function buildReceiptPdf(sale: Sale): jsPDF {
   };
 
   // Header: business identity + shop info.
-  center(sale.shop?.name ?? "SAYYIF PREMIUM FLOUR MASTER LTD", 12, true);
+  center(sale.shop?.name ?? "SAYYIF", 12, true);
   if (sale.shop?.phone) center(sale.shop.phone, 9);
   if (sale.shop?.address) center(sale.shop.address, 9);
   if (sale.shop?.email) center(sale.shop.email, 9);

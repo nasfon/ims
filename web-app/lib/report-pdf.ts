@@ -137,7 +137,7 @@ export function buildReportPdf(
   doc.setFontSize(8);
   doc.setTextColor(...hexToRgb("#71717a"));
   doc.text(
-    `${filename} — SAYYIF PREMIUM FLOUR MASTER LTD`,
+    `${filename} — SAYYIF`,
     WIDTH_MM / 2,
     290,
     { align: "center" },
