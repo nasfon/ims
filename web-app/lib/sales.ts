@@ -80,7 +80,10 @@ type Nested = Record<string, unknown>;
 
 /** Maps a DB row to the API shape, coercing numerics and optional embeds. */
 export function mapSaleRow(row: Nested): Sale {
-  const items = (row.items as Nested[] | undefined) ?? [];
+  const items =
+    (row.sale_items as Nested[] | undefined) ??
+    (row.items as Nested[] | undefined) ??
+    [];
   const customer = row.customer as Nested | null | undefined;
   const cashier = row.cashier as Nested | null | undefined;
   const shop = row.shop as Nested | null | undefined;
