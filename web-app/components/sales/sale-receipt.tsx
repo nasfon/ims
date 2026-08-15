@@ -137,10 +137,12 @@ export function SaleReceipt() {
                   <td className="py-2">
                     <div className="font-medium">
                       {item.product?.name ?? "Product"}
+                      {item.product?.sku ? (
+                        <span className="ml-1 text-xs font-normal text-muted-foreground">
+                          {item.product.sku}
+                        </span>
+                      ) : null}
                     </div>
-                    {item.product?.sku ? (
-                      <div className="text-xs text-muted-foreground">{item.product.sku}</div>
-                    ) : null}
                   </td>
                   <td className="py-2 text-center">{item.quantity}</td>
                   <td className="py-2 text-right">{formatNaira(item.unit_price)}</td>
