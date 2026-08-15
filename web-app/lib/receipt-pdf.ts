@@ -112,6 +112,13 @@ export function buildReceiptPdf(sale: Sale): jsPDF {
     doc.text(String(item.quantity), WIDTH_MM - margin - 32, y);
     doc.text(formatNaira(item.total_price), WIDTH_MM - margin, y, { align: "right" });
     y += lineHeight;
+    if (item.product?.sku) {
+      doc.setFontSize(7.5);
+      doc.setTextColor(120);
+      doc.text(item.product.sku, margin, y);
+      doc.setTextColor(0);
+      y += lineHeight * 0.8;
+    }
   });
 
   y += 2;
