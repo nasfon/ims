@@ -38,9 +38,8 @@ export function renderReceiptHtml(
   const rows = sale.items
     .map((item) => {
       const name = item.product?.name ?? "Product";
-      const sku = item.product?.sku;
       return `<tr>
-        <td>${escapeHtml(name)}${sku ? ` <span class="muted">(${escapeHtml(sku)})</span>` : ""}</td>
+        <td>${escapeHtml(name)}</td>
         <td class="center">${item.quantity}</td>
         <td class="right">${money(item.total_price)}</td>
       </tr>`;

@@ -108,11 +108,7 @@ export function buildReceiptPdf(sale: Sale): jsPDF {
     }
     doc.setFont("helvetica", "normal");
     doc.setFontSize(9);
-    const label =
-      item.product?.sku && item.product?.name
-        ? `${item.product.name} · ${item.product.sku}`
-        : (item.product?.name ?? "Product");
-    doc.text(label, margin, y);
+    doc.text(item.product?.name ?? "Product", margin, y);
     doc.text(String(item.quantity), WIDTH_MM - margin - 32, y);
     doc.text(formatNaira(item.total_price), WIDTH_MM - margin, y, { align: "right" });
     y += lineHeight;
