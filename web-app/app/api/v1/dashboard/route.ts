@@ -47,11 +47,8 @@ export async function GET() {
       .gte("expense_date", range.start)
       .lte("expense_date", range.end),
     session.supabase
-      .from("products")
-      .select("id", { count: "exact", head: true })
-      .is("deleted_at", null)
-      .eq("is_active", true)
-      .or("quantity.lte.\`minimum_stock\`"),
+      .rpc("low_stock_products", undefined, { count: "exact", head: true })
+      .eq("is_active", true),
     session.supabase
       .from("sales")
       .select(

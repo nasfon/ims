@@ -45,10 +45,16 @@ export async function GET(request: NextRequest) {
   const lowStock = searchParams.get("lowStock") === "true";
   const shopId = searchParams.get("shop_id")?.trim();
 
-  let query = session.supabase
-    .from("products")
-    .select("*", { count: "exact" })
-    .is("deleted_at", null)
+  let query = (
+    lowStock
+      ? session.supabase
+          .rpc("low_stock_products", undefined, { count: "exact" })
+          .select("*")
+      : session.supabase
+          .from("products")
+          .select("*", { count: "exact" })
+          .is("deleted_at", null)
+  )
     .order(sortField, { ascending: sortDir === "asc" })
     .range((page - 1) * limit, page * limit - 1);
 
@@ -57,9 +63,6 @@ export async function GET(request: NextRequest) {
   }
   if (status === "active" || status === "inactive") {
     query = query.eq("is_active", status === "active");
-  }
-  if (lowStock) {
-    query = query.or("quantity.lte.\`minimum_stock\`");
   }
   if (shopId && session.user.role_slug === ROLES.SUPER_ADMIN) {
     query = query.eq("shop_id", shopId);
@@ -73,7 +76,7 @@ export async function GET(request: NextRequest) {
 
   return apiSuccess(
     {
-      items: (data ?? []).map((row) => mapProductRow(row as ProductRow)),
+      items: (data ?? []).map((row: ProductRow) => mapProductRow(row)),
       pagination: {
         page,
         limit,

@@ -21,17 +21,14 @@ export async function GET(request: NextRequest) {
   const includeInactive = searchParams.get("includeInactive") === "true";
 
   let query = session.supabase
-    .from("products")
-    .select("*", { count: "exact" })
-    .is("deleted_at", null)
+    .rpc("low_stock_products", undefined, { count: "exact" })
+    .select("*")
     .order("name")
     .range((page - 1) * limit, page * limit - 1);
 
   if (!includeInactive) {
     query = query.eq("is_active", true);
   }
-
-  query = query.or("quantity.lte.\`minimum_stock\`");
 
   if (search) {
     query = query.or(`name.ilike.%${search}%,sku.ilike.%${search}%`);
@@ -45,7 +42,7 @@ export async function GET(request: NextRequest) {
 
   return apiSuccess(
     {
-      items: (data ?? []).map((row) => mapProductRow(row as ProductRow)),
+      items: (data ?? []).map((row: ProductRow) => mapProductRow(row)),
       pagination: {
         page,
         limit,
