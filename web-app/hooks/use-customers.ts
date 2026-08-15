@@ -59,6 +59,29 @@ export function useCustomers(params: CustomersQueryParams) {
   });
 }
 
+export type CustomerCreateInput = {
+  shop_id: string;
+  full_name: string;
+  phone: string;
+  email: string | null;
+  address: string | null;
+};
+
+/** Creates a customer (POST /customers). */
+export function useCreateCustomer() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input: CustomerCreateInput) =>
+      requestJson<CustomerItem>("/api/v1/customers", {
+        method: "POST",
+        body: JSON.stringify(input),
+      }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["customers"] });
+    },
+  });
+}
+
 /** Soft-deletes a customer (DELETE /customers/{id}). */
 export function useDeleteCustomer() {
   const qc = useQueryClient();

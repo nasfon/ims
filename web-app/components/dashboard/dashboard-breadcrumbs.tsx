@@ -36,7 +36,9 @@ export function DashboardBreadcrumbs() {
     const isLast = i === segments.length - 1;
     const label = segmentLabel(seg, segments[i - 1], isLast);
     if (!label) return;
-    crumbs.push({ label, href: `/${segments.slice(0, i + 1).join("/")}` });
+    const href = `/${segments.slice(0, i + 1).join("/")}`;
+    if (href === "/dashboard") return;
+    crumbs.push({ label, href });
   });
 
   return (
