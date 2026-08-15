@@ -56,15 +56,15 @@ function parseItems(src: Record<string, unknown>, errors: Record<string, string>
     src.items.forEach((raw, i) => {
       const key = `items[${i}]`;
       const line = srcObject(raw);
-      const product_id = asTrimmedString(line.productId);
+      const product_id = asTrimmedString(line.product_id);
       const quantity = asNumber(line.quantity);
 
       if (!product_id) {
-        errors[`${key}.productId`] = "productId is required.";
+        errors[`${key}.product_id`] = "product_id is required.";
       } else if (!UUID_RE.test(product_id)) {
-        errors[`${key}.productId`] = "productId must be a valid UUID.";
+        errors[`${key}.product_id`] = "product_id must be a valid UUID.";
       } else if (seen.has(product_id)) {
-        errors[`${key}.productId`] = "Each product can only appear once.";
+        errors[`${key}.product_id`] = "Each product can only appear once.";
       } else {
         seen.add(product_id);
       }

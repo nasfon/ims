@@ -62,6 +62,7 @@ export function SaleForm({ actorShopId, shops }: Props) {
   const [productSearch, setProductSearch] = useState("");
   const [customerSearch, setCustomerSearch] = useState("");
   const [generalError, setGeneralError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const { data: productsData, isPending: productsPending } = useProducts({
     page: 1,
@@ -138,12 +139,14 @@ export function SaleForm({ actorShopId, shops }: Props) {
   }
 
   function applyError(err: ApiError) {
+    setFieldErrors(err.errors ?? {});
     setGeneralError(err.message ?? "Unable to record sale.");
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setGeneralError(null);
+    setFieldErrors({});
 
     if (cart.length === 0) {
       setGeneralError("Add at least one item to the sale.");
@@ -433,6 +436,16 @@ export function SaleForm({ actorShopId, shops }: Props) {
               <p className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
                 {generalError}
               </p>
+            ) : null}
+
+            {Object.keys(fieldErrors).length > 0 ? (
+              <ul className="flex flex-col gap-1 rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                {Object.entries(fieldErrors).map(([key, message]) => (
+                  <li key={key}>
+                    {key}: {message}
+                  </li>
+                ))}
+              </ul>
             ) : null}
 
             <div className="flex flex-col gap-1.5 rounded-lg border border-border px-3 py-2.5 text-sm">

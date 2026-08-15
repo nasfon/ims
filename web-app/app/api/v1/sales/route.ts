@@ -146,7 +146,7 @@ export async function POST(request: NextRequest) {
     p_shop_id: shopId,
     p_cashier_id: session.user.id,
     p_customer_id: value.customer_id ?? null,
-    p_items: JSON.stringify(value.items),
+    p_items: value.items,
     p_discount: value.discount,
     p_payment_method: value.payment_method,
     p_amount_paid: value.amount_paid,

@@ -63,7 +63,7 @@ export async function PATCH(
     p_actor_id: session.user.id,
     p_shop_id: session.user.role_slug === ROLES.SUPER_ADMIN ? null : session.user.shop_id,
     p_reason: value.reason,
-    p_items: JSON.stringify(value.items),
+    p_items: value.items,
     p_payment_method: value.payment_method,
     p_discount: value.discount,
     p_amount_paid: value.amount_paid,
