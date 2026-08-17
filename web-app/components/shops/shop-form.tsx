@@ -22,9 +22,11 @@ import type { Shop, ShopInput } from "@/lib/shops";
 type Props = {
   mode: "create" | "edit";
   initial?: Shop;
+  /** When set (modal usage), closes instead of navigating after save/cancel. */
+  onClose?: () => void;
 };
 
-export function ShopForm({ mode, initial }: Props) {
+export function ShopForm({ mode, initial, onClose }: Props) {
   const router = useRouter();
 
   const [name, setName] = useState(initial?.name ?? "");
@@ -48,6 +50,10 @@ export function ShopForm({ mode, initial }: Props) {
   }
 
   function finish() {
+    if (onClose) {
+      onClose();
+      return;
+    }
     router.replace("/shops");
     router.refresh();
   }
@@ -163,7 +169,7 @@ export function ShopForm({ mode, initial }: Props) {
           <Button
             type="button"
             variant="ghost"
-            onClick={() => router.back()}
+            onClick={() => (onClose ? onClose() : router.back())}
             disabled={busy}
           >
             Cancel

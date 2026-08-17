@@ -54,9 +54,11 @@ type Props = {
   actorShopId: string;
   /** null when the actor is not a Super Admin (no shop selector). */
   shops: { id: string; name: string }[] | null;
+  /** When set (modal usage), closes instead of navigating after cancel. */
+  onClose?: () => void;
 };
 
-export function SaleForm({ actorShopId, shops }: Props) {
+export function SaleForm({ actorShopId, shops, onClose }: Props) {
   const router = useRouter();
 
   const [shopId, setShopId] = useState(actorShopId);
@@ -174,6 +176,7 @@ export function SaleForm({ actorShopId, shops }: Props) {
       },
       {
         onSuccess: (sale) => {
+          if (onClose) onClose();
           router.replace(`/sales/${sale.id}`);
           router.refresh();
         },
@@ -484,7 +487,12 @@ export function SaleForm({ actorShopId, shops }: Props) {
             </div>
           </CardContent>
           <CardFooter className="flex justify-end gap-2">
-            <Button type="button" variant="ghost" onClick={() => router.back()} disabled={busy}>
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => (onClose ? onClose() : router.back())}
+              disabled={busy}
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={busy}>

@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Loader2, Plus, Search } from "lucide-react";
+import { ArrowRight, Loader2, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import { NewSaleDialog } from "@/components/sales/new-sale-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -105,7 +106,16 @@ function SortableHead({ label, field, sort, sortDir, onSort }: SortableHeadProps
   );
 }
 
-export function SalesTable({ canManage }: { canManage: boolean }) {
+export function SalesTable({
+  canManage,
+  actorShopId,
+  shops,
+}: {
+  canManage: boolean;
+  actorShopId: string;
+  /** null when the actor is not a Super Admin (no shop selector). */
+  shops: { id: string; name: string }[] | null;
+}) {
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState("");
@@ -187,10 +197,7 @@ export function SalesTable({ canManage }: { canManage: boolean }) {
           </Select>
         </div>
         {canManage ? (
-          <Link href="/sales/new" className={buttonVariants({ size: "sm" })}>
-            <Plus />
-            New sale
-          </Link>
+          <NewSaleDialog actorShopId={actorShopId} shops={shops} />
         ) : null}
       </div>
 

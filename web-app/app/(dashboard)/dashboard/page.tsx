@@ -4,6 +4,7 @@ import { DashboardWidgets } from "@/components/dashboard/dashboard-widgets";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { requireSession } from "@/lib/auth";
 import { ROLES } from "@/lib/roles";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Dashboard — SAYYIF",
@@ -12,6 +13,13 @@ export const metadata: Metadata = {
 export default async function DashboardPage() {
   const { user } = await requireSession();
   const actorRole = user.role_slug ?? ROLES.CASHIER;
+
+  const supabase = await createClient();
+  let shops: { id: string; name: string }[] | null = null;
+  if (actorRole === ROLES.SUPER_ADMIN) {
+    const { data } = await supabase.from("shops").select("id, name").order("name");
+    shops = data ?? [];
+  }
 
   return (
     <div className="p-6">
@@ -25,7 +33,11 @@ export default async function DashboardPage() {
       </div>
 
       <QueryProvider>
-        <DashboardWidgets actorRole={actorRole} />
+        <DashboardWidgets
+          actorRole={actorRole}
+          actorShopId={user.shop_id ?? ""}
+          shops={shops}
+        />
       </QueryProvider>
     </div>
   );

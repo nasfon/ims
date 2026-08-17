@@ -4,6 +4,7 @@ import Link from "next/link";
 import {
   ArrowRight,
   BookOpenText,
+  CheckCircle2,
   Loader2,
   Package,
   PackageOpen,
@@ -12,8 +13,14 @@ import {
   TrendingUp,
   Users,
   Wallet,
+  X,
 } from "lucide-react";
+import { useState } from "react";
 
+import { CustomerForm } from "@/components/customers/customer-form";
+import { ExpenseForm } from "@/components/expenses/expense-form";
+import { ProductForm } from "@/components/products/product-form";
+import { SaleForm } from "@/components/sales/sale-form";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -23,11 +30,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPopup,
+} from "@/components/ui/dialog";
 import { useDashboard } from "@/hooks/use-dashboard";
 import { ROLES, type RoleSlug } from "@/lib/roles";
 import { cn, formatDateTime, formatNaira } from "@/lib/utils";
 import type { RecentSale } from "@/types/dashboard";
-
+import type { ShopOption } from "@/types/users";
 
 
 const SALE_STATUS_LABELS: Record<string, string> = {
@@ -69,36 +81,38 @@ function StatCard({
   );
 }
 
+type ActionId = "sale" | "product" | "customer" | "expense";
+
 const QUICK_ACTIONS: {
-  href: string;
+  id: ActionId;
   label: string;
   description: string;
   icon: typeof Package;
   roles: RoleSlug[];
 }[] = [
   {
-    href: "/sales/new",
+    id: "sale",
     label: "New sale",
     description: "Ring up a sale",
     icon: ShoppingCart,
     roles: [ROLES.SUPER_ADMIN, ROLES.SHOP_ADMIN, ROLES.CASHIER],
   },
   {
-    href: "/products/new",
+    id: "product",
     label: "Add product",
     description: "Create a new item",
     icon: Package,
     roles: [ROLES.SUPER_ADMIN, ROLES.SHOP_ADMIN],
   },
   {
-    href: "/customers/new",
+    id: "customer",
     label: "Add customer",
     description: "Register a customer",
     icon: Users,
     roles: [ROLES.SUPER_ADMIN, ROLES.SHOP_ADMIN],
   },
   {
-    href: "/expenses",
+    id: "expense",
     label: "Record expense",
     description: "Log an outgoing cost",
     icon: Wallet,
@@ -106,15 +120,100 @@ const QUICK_ACTIONS: {
   },
 ];
 
-export function DashboardWidgets({ actorRole }: { actorRole: RoleSlug }) {
+const DIALOG_CLASS: Record<ActionId, string> = {
+  sale: "max-h-[calc(100dvh-2rem)] max-w-4xl overflow-y-auto p-0",
+  product: "max-h-[calc(100dvh-2rem)] max-w-2xl overflow-y-auto p-0",
+  customer: "max-w-2xl overflow-y-auto p-0",
+  expense: "max-w-lg overflow-y-auto p-0",
+};
+
+export function DashboardWidgets({
+  actorRole,
+  actorShopId,
+  shops,
+}: {
+  actorRole: RoleSlug;
+  actorShopId: string;
+  /** null when the actor is a Shop Admin (no shop selector). */
+  shops: ShopOption[] | null;
+}) {
   const { data, isPending, error } = useDashboard();
 
   const quickActions = QUICK_ACTIONS.filter((action) =>
     action.roles.includes(actorRole),
   );
 
+  const [activeAction, setActiveAction] = useState<ActionId | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
+  function closeDialog() {
+    setActiveAction(null);
+  }
+
   return (
     <div className="flex flex-col gap-6">
+      {success ? (
+        <div className="flex items-center justify-between rounded-lg border border-emerald-600/30 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-700">
+          <span className="flex items-center gap-2">
+            <CheckCircle2 className="size-4" />
+            {success}
+          </span>
+          <button type="button" onClick={() => setSuccess(null)} aria-label="Dismiss">
+            <X className="size-4" />
+          </button>
+        </div>
+      ) : null}
+
+      <Dialog
+        open={activeAction !== null}
+        onOpenChange={(open) => {
+          if (!open) closeDialog();
+        }}
+      >
+        <DialogBackdrop />
+        <DialogPopup
+          className={
+            activeAction
+              ? DIALOG_CLASS[activeAction]
+              : "max-w-lg overflow-y-auto p-0"
+          }
+        >
+          {activeAction === "sale" ? (
+            <SaleForm
+              actorShopId={actorShopId}
+              shops={shops}
+              onClose={closeDialog}
+            />
+          ) : null}
+          {activeAction === "product" ? (
+            <ProductForm
+              mode="create"
+              actorShopId={actorShopId}
+              shops={shops}
+              onClose={closeDialog}
+            />
+          ) : null}
+          {activeAction === "customer" ? (
+            <CustomerForm
+              actorRole={actorRole}
+              actorShopId={actorShopId}
+              shops={shops}
+              onClose={closeDialog}
+            />
+          ) : null}
+          {activeAction === "expense" ? (
+            <ExpenseForm
+              mode="record"
+              actorRole={actorRole}
+              actorShopId={actorShopId}
+              shops={shops}
+              onClose={closeDialog}
+              onSuccess={(message) => setSuccess(message)}
+            />
+          ) : null}
+        </DialogPopup>
+      </Dialog>
+
       {isPending ? (
         <div className="rounded-xl border border-border p-10 text-center text-muted-foreground">
           <Loader2 className="mr-2 inline size-4 animate-spin" />
@@ -226,9 +325,13 @@ export function DashboardWidgets({ actorRole }: { actorRole: RoleSlug }) {
               </CardHeader>
               <CardContent className="flex flex-col gap-2">
                 {quickActions.map((action) => (
-                  <Link
-                    key={action.href}
-                    href={action.href}
+                  <button
+                    key={action.id}
+                    type="button"
+                    onClick={() => {
+                      setSuccess(null);
+                      setActiveAction(action.id);
+                    }}
                     className={cn(
                       buttonVariants({ variant: "outline" }),
                       "justify-start gap-3",
@@ -241,7 +344,7 @@ export function DashboardWidgets({ actorRole }: { actorRole: RoleSlug }) {
                         {action.description}
                       </span>
                     </span>
-                  </Link>
+                  </button>
                 ))}
               </CardContent>
             </Card>

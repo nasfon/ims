@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Loader2, Pencil, Plus, Users } from "lucide-react";
+import { Loader2, Pencil, Users } from "lucide-react";
 
+import { AddShopDialog } from "@/components/shops/add-shop-dialog";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Table,
@@ -44,10 +45,7 @@ export function ShopsTable() {
             Manage shop locations and their receipt details.
           </p>
         </div>
-        <Link href="/shops/new" className={buttonVariants({ size: "sm" })}>
-          <Plus />
-          Add shop
-        </Link>
+        <AddShopDialog />
       </div>
 
       <div className="rounded-xl border border-border">
