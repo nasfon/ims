@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Loader2, Pencil, Plus, Search, Trash2 } from "lucide-react";
+import { Loader2, Pencil, Search, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import { AddCustomerDialog } from "@/components/customers/add-customer-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,6 +18,8 @@ import {
 import { useCustomers, useDeleteCustomer } from "@/hooks/use-customers";
 import { cn, formatNaira } from "@/lib/utils";
 import type { CustomerItem } from "@/types/customers";
+import type { RoleSlug } from "@/lib/roles";
+import type { ShopOption } from "@/types/users";
 
 const PAGE_SIZE = 10;
 
@@ -71,7 +74,18 @@ function CreditCell({ totalCredit }: { totalCredit: number }) {
   );
 }
 
-export function CustomersTable({ canManage }: { canManage: boolean }) {
+export function CustomersTable({
+  canManage,
+  actorRole,
+  actorShopId,
+  shops,
+}: {
+  canManage: boolean;
+  actorRole: RoleSlug;
+  actorShopId: string;
+  /** null when the actor is a Shop Admin (no shop selector). */
+  shops: ShopOption[] | null;
+}) {
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
   const [sort, setSort] = useState("full_name");
@@ -135,10 +149,11 @@ export function CustomersTable({ canManage }: { canManage: boolean }) {
           />
         </div>
         {canManage ? (
-          <Link href="/customers/new" className={buttonVariants({ size: "sm" })}>
-            <Plus />
-            Add customer
-          </Link>
+          <AddCustomerDialog
+            actorRole={actorRole}
+            actorShopId={actorShopId}
+            shops={shops}
+          />
         ) : null}
       </div>
 

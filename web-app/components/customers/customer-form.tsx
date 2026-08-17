@@ -31,9 +31,11 @@ type Props = {
   actorShopId: string;
   /** null when the actor is a Shop Admin (no shop selector). */
   shops: ShopOption[] | null;
+  /** When set (modal usage), closes instead of navigating after save/cancel. */
+  onClose?: () => void;
 };
 
-export function CustomerForm({ actorRole, actorShopId, shops }: Props) {
+export function CustomerForm({ actorRole, actorShopId, shops, onClose }: Props) {
   const router = useRouter();
 
   const [fullName, setFullName] = useState("");
@@ -54,6 +56,10 @@ export function CustomerForm({ actorRole, actorShopId, shops }: Props) {
   }
 
   function finish() {
+    if (onClose) {
+      onClose();
+      return;
+    }
     router.replace("/customers");
     router.refresh();
   }
@@ -152,7 +158,7 @@ export function CustomerForm({ actorRole, actorShopId, shops }: Props) {
           <Button
             type="button"
             variant="ghost"
-            onClick={() => router.back()}
+            onClick={() => (onClose ? onClose() : router.back())}
             disabled={busy}
           >
             Cancel
