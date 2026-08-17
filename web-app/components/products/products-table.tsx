@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { AlertTriangle, Loader2, Pencil, Plus, Search, Trash2 } from "lucide-react";
+import { AlertTriangle, Loader2, Pencil, Search, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
@@ -25,6 +25,7 @@ import {
 import { useDeleteProduct, useProducts } from "@/hooks/use-products";
 import { cn, formatNaira } from "@/lib/utils";
 import type { ProductItem } from "@/types/products";
+import { AddProductDialog } from "@/components/products/add-product-dialog";
 
 const PAGE_SIZE = 10;
 
@@ -104,7 +105,16 @@ function SortableHead({ label, field, sort, sortDir, onSort }: SortableHeadProps
   );
 }
 
-export function ProductsTable({ canManage }: { canManage: boolean }) {
+export function ProductsTable({
+  canManage,
+  actorShopId,
+  shops,
+}: {
+  canManage: boolean;
+  actorShopId: string;
+  /** null when the actor is a Shop Admin (no shop selector). */
+  shops: { id: string; name: string }[] | null;
+}) {
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState("");
@@ -189,10 +199,7 @@ export function ProductsTable({ canManage }: { canManage: boolean }) {
           </Link>
         </div>
         {canManage ? (
-          <Link href="/products/new" className={buttonVariants({ size: "sm" })}>
-            <Plus />
-            Add product
-          </Link>
+          <AddProductDialog actorShopId={actorShopId} shops={shops} />
         ) : null}
       </div>
 

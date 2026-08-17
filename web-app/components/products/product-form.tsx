@@ -36,9 +36,11 @@ type Props = {
   actorShopId: string;
   /** null when the actor is a Shop Admin (no shop selector). */
   shops: { id: string; name: string }[] | null;
+  /** When set (modal usage), closes instead of navigating after save/cancel. */
+  onClose?: () => void;
 };
 
-export function ProductForm({ mode, initial, actorShopId, shops }: Props) {
+export function ProductForm({ mode, initial, actorShopId, shops, onClose }: Props) {
   const router = useRouter();
 
   const [name, setName] = useState(initial?.name ?? "");
@@ -67,6 +69,10 @@ export function ProductForm({ mode, initial, actorShopId, shops }: Props) {
   }
 
   function finish(message?: string) {
+    if (onClose) {
+      onClose();
+      return;
+    }
     if (message) {
       router.replace(`/products?created=${encodeURIComponent(message)}`);
     } else {
@@ -204,7 +210,12 @@ export function ProductForm({ mode, initial, actorShopId, shops }: Props) {
           ) : null}
         </CardContent>
         <CardFooter className="flex justify-end gap-2">
-          <Button type="button" variant="ghost" onClick={() => router.back()} disabled={busy}>
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => (onClose ? onClose() : router.back())}
+            disabled={busy}
+          >
             Cancel
           </Button>
           <Button type="submit" disabled={busy}>
