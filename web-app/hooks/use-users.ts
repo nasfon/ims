@@ -77,6 +77,20 @@ export function useUpdateUser(userId: string) {
   });
 }
 
+/** Soft-deletes a user (DELETE /users/{userId}). */
+export function useDeleteUser() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (userId: string) =>
+      requestJson<{ id: string }>(`/api/v1/users/${userId}`, {
+        method: "DELETE",
+      }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["users"] });
+    },
+  });
+}
+
 /** Activates/deactivates any user row (used by the users table). */
 export function useToggleUserActive() {
   const qc = useQueryClient();

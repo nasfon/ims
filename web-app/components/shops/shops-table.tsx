@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Loader2, Pencil, Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { Loader2, Pencil, Plus, Users } from "lucide-react";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -13,9 +12,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDeleteShop, useShops, type ApiError } from "@/hooks/use-shops";
+import { DeleteShopDialog } from "@/components/shops/delete-shop-dialog";
+import { useShops } from "@/hooks/use-shops";
 import { cn } from "@/lib/utils";
-import type { Shop } from "@/lib/shops";
 
 function StatusCell({ isActive }: { isActive: boolean }) {
   return (
@@ -33,32 +32,8 @@ function StatusCell({ isActive }: { isActive: boolean }) {
 
 export function ShopsTable() {
   const { data, isPending, error } = useShops();
-  const {
-    mutate: removeShop,
-    isPending: deleting,
-    variables: deletingId,
-    error: deleteError,
-    reset: resetDeleteError,
-  } = useDeleteShop();
 
   const shops = data ?? [];
-  const isDeleting = (id: string) => deleting && deletingId === id;
-
-  function handleDelete(shop: Shop) {
-    if (
-      window.confirm(
-        `Delete "${shop.name}"? Shops with assigned staff cannot be deleted — deactivate them instead.`,
-      )
-    ) {
-      resetDeleteError();
-      removeShop(shop.id, {
-        onError: (err) => {
-          const message = (err as ApiError).message ?? "Unable to delete shop.";
-          window.alert(message);
-        },
-      });
-    }
-  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -74,12 +49,6 @@ export function ShopsTable() {
           Add shop
         </Link>
       </div>
-
-      {deleteError ? (
-        <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-          {(deleteError as ApiError).message}
-        </div>
-      ) : null}
 
       <div className="rounded-xl border border-border">
         <Table>
@@ -126,21 +95,21 @@ export function ShopsTable() {
                   <TableCell className="text-right">
                     <div className="inline-flex items-center justify-end gap-1">
                       <Link
+                        href={`/shops/${shop.id}#staff`}
+                        className={buttonVariants({ variant: "ghost", size: "sm" })}
+                        aria-label={`Manage staff for ${shop.name}`}
+                      >
+                        <Users />
+                        Staff
+                      </Link>
+                      <Link
                         href={`/shops/${shop.id}`}
                         className={buttonVariants({ variant: "ghost", size: "icon-sm" })}
                         aria-label={`Edit ${shop.name}`}
                       >
                         <Pencil />
                       </Link>
-                      <Button
-                        variant="ghost"
-                        size="icon-sm"
-                        aria-label={`Delete ${shop.name}`}
-                        onClick={() => handleDelete(shop)}
-                        disabled={isDeleting(shop.id)}
-                      >
-                        <Trash2 />
-                      </Button>
+                      <DeleteShopDialog shop={shop} />
                     </div>
                   </TableCell>
                 </TableRow>

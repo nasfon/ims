@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Loader2, Pencil, Plus, Search } from "lucide-react";
+import { Loader2, Pencil, Plus, Search, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
@@ -22,7 +22,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useToggleUserActive, useUsers } from "@/hooks/use-users";
+import { useDeleteUser, useToggleUserActive, useUsers } from "@/hooks/use-users";
+import type { UserItem } from "@/types/users";
 import { ROLES, ROLE_NAMES, type RoleSlug } from "@/lib/roles";
 import { cn } from "@/lib/utils";
 
@@ -74,10 +75,29 @@ export function UsersTable({
     isPending: toggling,
     variables: togglingTarget,
   } = useToggleUserActive();
+  const {
+    mutate: removeUser,
+    isPending: deleting,
+    variables: deletingId,
+    error: deleteError,
+    reset: resetDeleteError,
+  } = useDeleteUser();
 
   const users = data?.items ?? [];
   const pagination = data?.pagination;
   const isToggling = (id: string) => toggling && togglingTarget?.userId === id;
+  const isDeleting = (id: string) => deleting && deletingId === id;
+
+  function handleDelete(user: UserItem) {
+    if (
+      window.confirm(
+        `Delete "${user.full_name}"? They will lose access immediately and no longer appear in the user list.`,
+      )
+    ) {
+      resetDeleteError();
+      removeUser(user.id);
+    }
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -111,6 +131,12 @@ export function UsersTable({
           Add user
         </Link>
       </div>
+
+      {deleteError ? (
+        <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          {deleteError.message}
+        </div>
+      ) : null}
 
       <div className="rounded-xl border border-border">
         <Table>
@@ -181,6 +207,15 @@ export function UsersTable({
                           disabled={isToggling(user.id)}
                         >
                           {user.is_active ? "Deactivate" : "Activate"}
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon-sm"
+                          aria-label={`Delete ${user.full_name}`}
+                          onClick={() => handleDelete(user)}
+                          disabled={isDeleting(user.id)}
+                        >
+                          <Trash2 />
                         </Button>
                       </div>
                     )}

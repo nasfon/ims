@@ -7,8 +7,16 @@ import {
 } from "@tanstack/react-query";
 
 import type { Shop, ShopInput } from "@/lib/shops";
+import type { UserItem } from "@/types/users";
 
 export type ApiError = Error & { errors?: Record<string, string> };
+
+export type ShopUsers = {
+  /** Users currently assigned to the shop. */
+  assigned: UserItem[];
+  /** Active users with no shop assigned (candidates for assignment). */
+  available: UserItem[];
+};
 
 async function requestJson<T>(
   url: string,
@@ -79,6 +87,46 @@ export function useDeleteShop() {
       }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["shops"] });
+    },
+  });
+}
+
+export function useShopUsers(shopId: string | null) {
+  return useQuery({
+    queryKey: ["shop-users", shopId],
+    queryFn: () => requestJson<ShopUsers>(`/api/v1/shops/${shopId}/users`),
+    enabled: !!shopId,
+  });
+}
+
+/** Assigns an unassigned user to a shop (POST /shops/{shopId}/users/{userId}). */
+export function useAssignUserToShop(shopId: string | null) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (userId: string) =>
+      requestJson<{ id: string; shop_id: string }>(
+        `/api/v1/shops/${shopId}/users/${userId}`,
+        { method: "POST" },
+      ),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["shop-users", shopId] });
+      qc.invalidateQueries({ queryKey: ["users"] });
+    },
+  });
+}
+
+/** Deassigns a user from a shop (DELETE /shops/{shopId}/users/{userId}). */
+export function useUnassignUserFromShop(shopId: string | null) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (userId: string) =>
+      requestJson<{ id: string; shop_id: null }>(
+        `/api/v1/shops/${shopId}/users/${userId}`,
+        { method: "DELETE" },
+      ),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["shop-users", shopId] });
+      qc.invalidateQueries({ queryKey: ["users"] });
     },
   });
 }

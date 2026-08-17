@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
 
   const userRow = {
     id: authUser.user.id,
-    shop_id: value.shop_id ?? "",
+    shop_id: value.shop_id ?? null,
     role_id: resolved.role_id,
     full_name: value.full_name ?? "",
     phone: value.phone ?? null,

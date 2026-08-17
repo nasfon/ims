@@ -7,6 +7,8 @@ export const AUDIT_ACTIONS = {
   USER_UPDATED: "user_updated",
   USER_DEACTIVATED: "user_deactivated",
   USER_DELETED: "user_deleted",
+  USER_ASSIGNED: "user_assigned",
+  USER_UNASSIGNED: "user_unassigned",
   SHOP_CREATED: "shop_created",
   SHOP_UPDATED: "shop_updated",
   SHOP_DELETED: "shop_deleted",

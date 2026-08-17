@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { QueryProvider } from "@/components/providers/query-provider";
 import { ShopForm } from "@/components/shops/shop-form";
+import { ShopUsers } from "@/components/shops/shop-users";
 import { requireSuperAdmin } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import type { Shop } from "@/lib/shops";
@@ -47,9 +48,10 @@ export default async function EditShopPage({
         </p>
       </div>
 
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto flex max-w-2xl flex-col gap-6">
         <QueryProvider>
           <ShopForm mode="edit" initial={shop as Shop} />
+          <ShopUsers shopId={shop.id} />
         </QueryProvider>
       </div>
     </div>

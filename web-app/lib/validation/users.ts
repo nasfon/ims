@@ -83,9 +83,14 @@ export function parseUserCreate(body: unknown): ParsedValue<UserCreateInput> {
     errors.role = "Provide a role (role_id or role_slug).";
   }
 
-  const shop_id = asTrimmedString(src.shop_id);
-  if (!shop_id) errors.shop_id = "shop_id is required.";
-  else if (!UUID_RE.test(shop_id)) errors.shop_id = "shop_id must be a valid UUID.";
+  const shop_id = src.shop_id == null ? null : asTrimmedString(src.shop_id);
+  if (src.shop_id != null) {
+    if (shop_id === null || shop_id.length === 0) {
+      errors.shop_id = "shop_id must be text.";
+    } else if (!UUID_RE.test(shop_id)) {
+      errors.shop_id = "shop_id must be a valid UUID.";
+    }
+  }
 
   let is_active: boolean | undefined;
   if (src.is_active != null) {

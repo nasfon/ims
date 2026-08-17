@@ -108,18 +108,29 @@ export async function DELETE(
 
   const admin = createServerAdminClient();
 
-  // A shop with staff (or any business data) must be disabled, not deleted:
-  // referential integrity keeps users/products/etc. bound to the shop.
+  // A shop with active staff must have them deactivated (deassigned) first.
   const { count } = await admin
     .from("users")
     .select("id", { count: "exact", head: true })
-    .eq("shop_id", shopId);
+    .eq("shop_id", shopId)
+    .is("deleted_at", null);
 
   if ((count ?? 0) > 0) {
     return apiError(
-      "Cannot delete a shop that has assigned staff. Deactivate it instead.",
+      "Shop has assigned staff. Deactivate them before deleting this shop.",
       409,
     );
+  }
+
+  // Soft-deleted users still reference the shop via the `on delete restrict`
+  // FK, so clear it before deleting.
+  const { error: unassignError } = await admin
+    .from("users")
+    .update({ shop_id: null })
+    .eq("shop_id", shopId);
+
+  if (unassignError) {
+    return apiError("Unable to unassign staff before deleting the shop.", 500);
   }
 
   const { data: shop, error: dbError } = await admin
@@ -130,7 +141,14 @@ export async function DELETE(
     .single();
 
   if (dbError || !shop) {
-    return apiError("Shop not found.", 404);
+    return apiError(
+      dbError
+        ? /foreign key|restrict/i.test(dbError.message)
+          ? "Shop has related data that blocks deletion."
+          : "Unable to delete shop."
+        : "Shop not found.",
+      404,
+    );
   }
 
   // Audited after the row is gone so the entry survives the
