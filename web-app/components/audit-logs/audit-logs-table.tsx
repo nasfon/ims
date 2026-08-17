@@ -23,6 +23,7 @@ import {
 import { useAuditLogs } from "@/hooks/use-audit-logs";
 import { useUsers } from "@/hooks/use-users";
 import { AUDIT_ACTIONS } from "@/lib/audit";
+import { formatDateTime } from "@/lib/utils";
 
 const PAGE_SIZE = 25;
 
@@ -56,15 +57,7 @@ function actionLabel(action: string): string {
   return ACTION_LABELS[action] ?? action;
 }
 
-function formatDateTime(iso: string): string {
-  return new Date(iso).toLocaleString("en-NG", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
+
 
 export function AuditLogsTable() {
   const [page, setPage] = useState(1);

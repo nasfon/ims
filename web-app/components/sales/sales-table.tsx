@@ -23,7 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useSales } from "@/hooks/use-sales";
-import { cn, formatNaira } from "@/lib/utils";
+import { cn, formatDate, formatNaira } from "@/lib/utils";
 import type { Sale } from "@/types/sales";
 
 const PAGE_SIZE = 10;
@@ -57,13 +57,7 @@ const SALE_STATUS_LABELS: Record<string, string> = {
   reversed: "Reversed",
 };
 
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-NG", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-}
+
 
 function paymentMethodLabel(method: string): string {
   return PAYMENT_METHOD_LABELS[method] ?? method;

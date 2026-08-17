@@ -24,7 +24,7 @@ import {
   useCustomerCredit,
   useCustomerSales,
 } from "@/hooks/use-customers";
-import { cn, formatNaira } from "@/lib/utils";
+import { cn, formatDate, formatNaira } from "@/lib/utils";
 import type { CustomerItem } from "@/types/customers";
 
 const PAYMENT_METHOD_LABELS: Record<string, string> = {
@@ -39,13 +39,7 @@ const SALE_STATUS_LABELS: Record<string, string> = {
   reversed: "Reversed",
 };
 
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-NG", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-}
+
 
 function paymentMethodLabel(method: string): string {
   return PAYMENT_METHOD_LABELS[method] ?? method;

@@ -8,7 +8,13 @@ import { useSession } from "@/components/auth/session-provider";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export function LogoutButton({ className }: { className?: string }) {
+export function LogoutButton({
+  className,
+  collapseLabel = false,
+}: {
+  className?: string;
+  collapseLabel?: boolean;
+}) {
   const router = useRouter();
   const { signOut } = useSession();
   const [loading, setLoading] = useState(false);
@@ -40,7 +46,7 @@ export function LogoutButton({ className }: { className?: string }) {
       ) : (
         <LogOut className="size-4" />
       )}
-      Sign out
+      <span className={cn(collapseLabel && "md:hidden")}>Sign out</span>
     </Button>
   );
 }

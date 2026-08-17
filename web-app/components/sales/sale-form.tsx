@@ -25,6 +25,13 @@ import {
 import { useCustomers } from "@/hooks/use-customers";
 import { useProducts } from "@/hooks/use-products";
 import { useCreateSale, type ApiError } from "@/hooks/use-sales";
+import {
+  calcAmountPaid,
+  calcDiscount,
+  calcRemainingCredit,
+  calcSubtotal,
+  calcTotal,
+} from "@/lib/calculations";
 import { cn, formatNaira } from "@/lib/utils";
 import type { ProductItem } from "@/types/products";
 
@@ -89,13 +96,13 @@ export function SaleForm({ actorShopId, shops }: Props) {
   const busy = create.isPending;
 
   const subtotal = useMemo(
-    () => cart.reduce((sum, line) => sum + line.selling_price * line.quantity, 0),
+    () => calcSubtotal(cart.map((line) => ({ unit_price: line.selling_price, quantity: line.quantity }))),
     [cart],
   );
-  const discountValue = Math.max(0, Number(discount) || 0);
-  const total = Math.max(0, subtotal - discountValue);
-  const amountPaidValue = Math.max(0, Number(amountPaid) || 0);
-  const remainingCredit = Math.max(0, total - amountPaidValue);
+  const discountValue = calcDiscount(subtotal, Number(discount) || 0);
+  const total = calcTotal(subtotal, discountValue);
+  const amountPaidValue = calcAmountPaid(Number(amountPaid) || 0);
+  const remainingCredit = calcRemainingCredit(total, amountPaidValue);
 
   const selectedCustomer = customersData?.items.find((c) => c.id === customerId);
 

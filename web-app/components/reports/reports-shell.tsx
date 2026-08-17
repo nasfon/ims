@@ -46,7 +46,7 @@ import {
   SALE_STATUS_LABELS,
 } from "@/lib/receipt-pdf";
 import { buildReportPdf } from "@/lib/report-pdf";
-import { cn, formatNaira } from "@/lib/utils";
+import { cn, formatDate, formatNaira } from "@/lib/utils";
 import type { LucideIcon } from "lucide-react";
 import type {
   CreditReport,
@@ -109,13 +109,7 @@ function daysAgoInput(days: number): string {
   return `${d.getFullYear()}-${m}-${day}`;
 }
 
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-NG", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-}
+
 
 function SummaryCard({
   label,

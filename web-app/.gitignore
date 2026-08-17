@@ -12,6 +12,10 @@
 
 # testing
 /coverage
+/test/coverage
+# integration test scaffolding (live server URL + Next dev log)
+test/.integration-server-url
+test/integration-next.log
 
 # next.js
 /.next/

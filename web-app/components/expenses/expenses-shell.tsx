@@ -45,7 +45,7 @@ import {
   type ApiError,
 } from "@/hooks/use-expenses";
 import { ROLES, type RoleSlug } from "@/lib/roles";
-import { cn, formatNaira } from "@/lib/utils";
+import { cn, formatDate, formatNaira } from "@/lib/utils";
 import type { Expense } from "@/types/expenses";
 import type { ShopOption } from "@/types/users";
 
@@ -58,14 +58,6 @@ const SORT_FIELDS = [
 ] as const;
 
 type FormState = { mode: "record" } | { mode: "edit"; expense: Expense } | null;
-
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-NG", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-}
 
 /** Converts an ISO timestamp to a "YYYY-MM-DD" value for <input type="date">. */
 function toDateInputValue(iso: string): string {

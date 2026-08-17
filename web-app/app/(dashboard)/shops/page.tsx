@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
-import { ModulePlaceholder } from "@/components/dashboard/module-placeholder";
+import { QueryProvider } from "@/components/providers/query-provider";
+import { ShopsTable } from "@/components/shops/shops-table";
 import { requireSuperAdmin } from "@/lib/auth";
 
 export const metadata: Metadata = {
@@ -9,5 +10,12 @@ export const metadata: Metadata = {
 
 export default async function ShopsPage() {
   await requireSuperAdmin();
-  return <ModulePlaceholder title="Shops" />;
+
+  return (
+    <div className="p-6">
+      <QueryProvider>
+        <ShopsTable />
+      </QueryProvider>
+    </div>
+  );
 }

@@ -104,10 +104,10 @@ Source of requirements: `docs/` (PRD, Architecture, Database, API, UI, Security,
 
 ## Phase 6 — Testing & Hardening
 
-- [ ] Set up test framework (Vitest/Jest) + config
-- [ ] Write unit tests: calculations (subtotal, discount, total, stock, credit, revenue)
-- [ ] Write unit tests: formatting utilities (currency, dates, receipt numbers)
-- [ ] Write integration tests: API endpoints + RLS policies
+- [x] Set up test framework (Vitest/Jest) + config
+- [x] Write unit tests: calculations (subtotal, discount, total, stock, credit, revenue)
+- [x] Write unit tests: formatting utilities (currency, dates, receipt numbers)
+- [x] Write integration tests: API endpoints + RLS policies
 - [ ] Write integration tests: auth/session flow, receipt PDF generation, logo upload
 - [ ] Write E2E tests: login/logout, product create, sale + stock deduction, credit payment, correction/reversal, expense, reports, multi-shop isolation, role restriction
 - [ ] Verify RLS blocks cross-shop reads/writes (isolation test suite)

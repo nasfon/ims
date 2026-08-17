@@ -25,18 +25,10 @@ import {
 } from "@/components/ui/card";
 import { useDashboard } from "@/hooks/use-dashboard";
 import { ROLES, type RoleSlug } from "@/lib/roles";
-import { cn, formatNaira } from "@/lib/utils";
+import { cn, formatDateTime, formatNaira } from "@/lib/utils";
 import type { RecentSale } from "@/types/dashboard";
 
-function formatDateTime(iso: string): string {
-  return new Date(iso).toLocaleString("en-NG", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
+
 
 const SALE_STATUS_LABELS: Record<string, string> = {
   completed: "Completed",

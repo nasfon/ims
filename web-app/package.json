@@ -7,6 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "coverage": "vitest run --coverage",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
     "db:start": "supabase start",
     "db:stop": "supabase stop",
     "db:reset": "supabase db reset",
@@ -33,20 +37,30 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^5.2.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.0",
+    "jsdom": "^26.1.0",
     "server-only": "^0.0.1",
     "supabase": "^2.113.0",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vercel": "^58.9.1"
+    "vercel": "^58.9.1",
+    "vitest": "^3.2.7"
   },
   "allowScripts": {
     "lucide-react@1.31.0": true,
     "@supabase/supabase-js@2.112.3": true,
-    "supabase@2.113.0": true
+    "supabase@2.113.0": true,
+    "core-js@3.50.0": true,
+    "esbuild@0.27.0": true,
+    "unrs-resolver@1.12.2": true
   }
 }
